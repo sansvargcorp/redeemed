@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#8B5CF6">
+    <meta name="description" content="Redeemed - A faith-based accountability app to help you break free from addiction. Track your progress, find encouragement in Scripture, and build lasting freedom.">
+    <meta name="keywords" content="addiction recovery, faith-based recovery, accountability app, porn addiction, Christian recovery, spiritual growth, freedom from addiction">
+    <meta name="author" content="SansVarg Corporation">
+    <title>Redeemed - Your Journey to Freedom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Floating Donation Badge -->
+        <a href="https://paypal.me/sansvargscorp" target="_blank" class="floating-donation-badge" id="floatingDonation">
+            <span>💛</span>
+            <span>Support Us</span>
+        </a>
+
+```
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="app-logo">REDEEMED</div>
+                <div class="user-greeting" id="userGreeting"></div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <div class="settings-btn" onclick="toggleDarkMode()" id="darkModeBtn">🌙</div>
+                <div class="settings-btn" onclick="openSettings()">⚙️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div class="page active" id="homePage">
+        <!-- Streak Hero -->
+        <div class="streak-hero">
+            <div class="streak-card">
+                <div class="streak-number" id="streakNumber">0</div>
+                <div class="streak-label">DAYS STRONG 🔥</div>
+                <div class="time-since" id="timeSince">Starting your journey</div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" id="totalDays">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="bestStreak">0</div>
+                <div class="stat-label">Best</div>
+            </div>
+            <div class="stat-item" onclick="shareProgress()" style="cursor: pointer;">
+                <div style="font-size: 24px; margin-bottom: 6px;">📤</div>
+                <div class="stat-label">Share</div>
+            </div>
+        </div>
+
+        <!-- Panic Button -->
+        <div class="panic-container">
+            <button class="panic-btn" onclick="openPanicModal()">
+                <span>🆘</span>
+                <span>I NEED HELP NOW</span>
+            </button>
+            <button class="add-btn" onclick="scriptureBlast()" style="margin-top: 12px; background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);">
+                ⚡ SCRIPTURE BLAST
+            </button>
+        </div>
+
+        <!-- Featured Donation Banner -->
+        <div style="padding: 0 20px 32px;">
+            <div class="featured-donation-banner">
+                <div class="donation-sparkle">✨</div>
+                <div style="font-size: 22px; font-weight: 900; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
+                    Keep Redeemed Free Forever
+                </div>
+                <div style="font-size: 14px; margin-bottom: 20px; opacity: 0.9; line-height: 1.5;">
+                    This app has helped thousands break free. Your donation keeps it 100% free for everyone who needs it.
+                </div>
+                <a href="https://paypal.me/sansvargscorp" target="_blank" class="featured-donate-btn">
+                    <span style="font-size: 20px;">💛</span>
+                    <span>Support Our Mission</span>
+                    <span style="font-size: 20px;">→</span>
+                </a>
+                <div style="font-size: 12px; margin-top: 12px; opacity: 0.8;">
+                    Every dollar helps someone find freedom 🙏
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Quote & Affirmation -->
+        <div class="section" style="padding-bottom: 16px;">
+            <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.1) 100%); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 24px; margin-bottom: 16px; box-shadow: 0 0 32px rgba(59, 130, 246, 0.15);">
+                <div style="font-size: 14px; font-weight: 700; color: #60A5FA; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">💪 Today's Affirmation</div>
+                <div style="font-size: 18px; font-weight: 600; line-height: 1.5; color: rgba(255, 255, 255, 0.95);" id="dailyAffirmation">
+                    I am free. I am strong. I am victorious.
+                </div>
+            </div>
+            
+            <div style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 16px; padding: 20px; box-shadow: 0 0 24px rgba(139, 92, 246, 0.1);">
+                <div style="font-size: 13px; font-weight: 700; color: #A78BFA; margin-bottom: 10px;">✨ Quote of the Day</div>
+                <div style="font-size: 15px; font-style: italic; line-height: 1.6; color: rgba(255, 255, 255, 0.85);" id="dailyQuote">
+                    "The greatest glory in living lies not in never falling, but in rising every time we fall."
+                </div>
+                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 8px;" id="quoteAuthor">- Nelson Mandela</div>
+            </div>
+        </div>
+
+        <!-- Daily Checklist -->
+        <div class="section-header">Daily Checklist</div>
+        <div class="checklist" id="checklistContainer">
+            <div class="checklist-item" onclick="toggleCheckbox(this, 'prayer')">
+                <div class="checkbox">
+                    <span class="checkbox-icon">✓</span>
+                </div>
+                <div class="checklist-label">Morning Prayer & Meditation</div>
+            </div>
+            <div class="checklist-item" onclick="toggleCheckbox(this, 'bible')">
+                <div class="checkbox">
+                    <span class="checkbox-icon">✓</span>
+                </div>
+                <div class="checklist-label">Read Daily Scripture</div>
+            </div>
+            <div class="checklist-item" onclick="toggleCheckbox(this, 'exercise')">
+                <div class="checkbox">
+                    <span class="checkbox-icon">✓</span>
+                </div>
+                <div class="checklist-label">Physical Exercise</div>
+            </div>
+            <div class="checklist-item" onclick="toggleCheckbox(this, 'journal')">
+                <div class="checkbox">
+                    <span class="checkbox-icon">✓</span>
+                </div>
+                <div class="checklist-label">Journal Your Thoughts</div>
+            </div>
+            <div class="checklist-item" onclick="toggleCheckbox(this, 'gratitude')">
+                <div class="checkbox">
+                    <span class="checkbox-icon">✓</span>
+                </div>
+                <div class="checklist-label">Write 3 Things You're Grateful For</div>
+            </div>
+        </div>
+
+        <!-- Bible Verse -->
+        <div class="section-header">Daily Encouragement</div>
+        <div class="verse-card" style="margin: 0 20px 20px;">
+            <div class="verse-icon">✝️</div>
+            <div class="verse-text" id="verseText">
+                "I can do all things through Christ who strengthens me."
+            </div>
+            <div class="verse-reference" id="verseRef">Philippians 4:13</div>
+            <button class="refresh-btn" onclick="loadNewVerse()">🔄 New Verse</button>
+        </div>
+    </div>
+
+    <!-- Reasons Page -->
+    <div class="page" id="reasonsPage">
+        <div class="section" style="padding-top: 24px;">
+            <div class="section-header">Why I'm Doing This</div>
+            <div id="reasonsList"></div>
+            <input type="text" class="input-field" id="reasonInput" placeholder="Why are you choosing freedom?">
+            <button class="add-btn" onclick="addReason()">+ Add Reason</button>
+            
+            <!-- Reasons Page Donation -->
+            <div style="margin-top: 32px; background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 16px; padding: 20px; text-align: center; box-shadow: 0 0 32px rgba(251, 191, 36, 0.2);">
+                <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #FCD34D;">Help Others Find Freedom Too</div>
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.7); margin-bottom: 16px;">Your donation keeps Redeemed free for everyone</div>
+                <a href="https://paypal.me/sansvargscorp" target="_blank" style="background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%); color: #000; border: none; border-radius: 12px; padding: 12px 24px; font-size: 14px; font-weight: 700; text-decoration: none; display: inline-block; box-shadow: 0 4px 16px rgba(251, 191, 36, 0.4);">
+                    💛 Support Our Mission
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tools Page -->
+    <div class="page" id="toolsPage">
+        <div class="section" style="padding-top: 24px;">
+            <div class="section-header">Freedom Tools</div>
+            
+            <!-- Trigger Tracker -->
+            <div style="margin-bottom: 24px;">
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #A78BFA;">🎯 Trigger Tracker</div>
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Track what triggers your urges to find patterns</div>
+                <select class="input-field" id="triggerSelect" style="margin-bottom: 8px;">
+                    <option value="">Select a trigger...</option>
+                    <option value="Boredom">Boredom</option>
+                    <option value="Stress">Stress</option>
+                    <option value="Loneliness">Loneliness</option>
+                    <option value="Anger">Anger</option>
+                    <option value="Fatigue">Fatigue</option>
+                    <option value="Social Media">Social Media</option>
+                    <option value="Late Night">Late Night</option>
+                    <option value="Depression">Depression</option>
+                </select>
+                <button class="add-btn" onclick="logTrigger()">📝 Log Trigger</button>
+                <div id="triggerStats" style="margin-top: 12px; font-size: 13px; color: rgba(255, 255, 255, 0.6);"></div>
+            </div>
+
+            <!-- Prevention Plan -->
+            <div style="margin-bottom: 24px;">
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #A78BFA;">🛡️ Prevention Plan</div>
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">When tempted, I will...</div>
+                <div id="preventionList"></div>
+                <input type="text" class="input-field" id="preventionInput" placeholder="e.g., Do 20 pushups">
+                <button class="add-btn" onclick="addPreventionStep()">+ Add Action Step</button>
+            </div>
+
+            <!-- Gratitude Journal -->
+            <div style="margin-bottom: 24px;">
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #A78BFA;">🙏 Gratitude Journal</div>
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">3 things I'm grateful for today</div>
+                <div id="gratitudeToday"></div>
+                <input type="text" class="input-field" id="gratitudeInput" placeholder="I'm grateful for...">
+                <button class="add-btn" onclick="addGratitude()">✨ Add Gratitude</button>
+            </div>
+
+            <!-- Scripture Memory -->
+            <div style="margin-bottom: 24px;">
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #A78BFA;">📖 Scripture Memory</div>
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Practice memorizing key verses</div>
+                <button class="add-btn" onclick="startScriptureQuiz()">🎯 Start Memory Quiz</button>
+            </div>
+
+            <!-- Weekly Report -->
+            <div>
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #A78BFA;">📄 Weekly Report</div>
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Generate a summary of your week</div>
+                <button class="add-btn" onclick="generateWeeklyReport()">📊 Generate Report</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Page -->
+    <div class="page" id="progressPage">
+        <div class="section" style="padding-top: 24px;">
+            <div class="section-header">Your Progress</div>
+            
+            <!-- Urge Log -->
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div style="font-size: 16px; font-weight: 700;">Urges Resisted Today</div>
+                    <div style="font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" id="urgeCount">0</div>
+                </div>
+                <button class="add-btn" onclick="logUrge()" style="margin-bottom: 10px;">✅ I Resisted an Urge</button>
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.5); text-align: center;">Track every victory - they add up!</div>
+            </div>
+
+            <!-- Progress Donation Banner -->
+            <div style="background: linear-gradient(135deg, #FCD34D 0%, #FBBF24 50%, #F59E0B 100%); border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center; color: #000; box-shadow: 0 12px 40px rgba(251, 191, 36, 0.4); border: 2px solid rgba(252, 211, 77, 0.6);">
+                <div style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">💛 Love Redeemed?</div>
+                <div style="font-size: 13px; margin-bottom: 16px; opacity: 0.9;">Help us keep it free for everyone</div>
+                <a href="https://paypal.me/sansvargscorp" target="_blank" style="background: #000; color: #FCD34D; border: none; border-radius: 12px; padding: 12px 24px; font-size: 14px; font-weight: 700; text-decoration: none; display: inline-block;">
+                    Donate Now
+                </a>
+            </div>
+
+            <!-- Milestones -->
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Milestones</div>
+                <div id="milestonesList"></div>
+            </div>
+
+            <!-- Reset Streak -->
+            <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; padding: 20px;">
+                <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #EF4444;">Relapsed?</div>
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 16px; line-height: 1.6;">
+                    Don't give up. Reset and start again. God's mercies are new every morning.
+                </div>
+                <button class="add-btn" onclick="confirmReset()" style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
+                    Reset Streak
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Page -->
+    <div class="page" id="supportPage">
+        <div class="section" style="padding-top: 24px;">
+            <div class="section-header">Support This Mission</div>
+            <div class="donation-card">
+                <div class="donation-title">💛 Help Us Help Others</div>
+                <div class="donation-subtitle">100% Free Forever • Your support keeps it that way</div>
+                <a href="https://paypal.me/sansvargscorp" target="_blank" class="donate-btn">
+                    Donate via PayPal
+                </a>
+            </div>
+            <div style="color: rgba(255, 255, 255, 0.6); font-size: 14px; line-height: 1.7; margin-bottom: 24px;">
+                <p style="margin-bottom: 16px;">
+                    <strong style="color: white;">Our Mission:</strong> Free tools for anyone struggling with addiction.
+                </p>
+                <p style="margin-bottom: 12px;">Your donations help us:</p>
+                <ul style="margin-left: 20px;">
+                    <li style="margin-bottom: 8px;">Keep the app 100% free</li>
+                    <li style="margin-bottom: 8px;">Add community-requested features</li>
+                    <li style="margin-bottom: 8px;">Provide 24/7 support</li>
+                    <li style="margin-bottom: 8px;">Reach more people in need</li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 0 24px rgba(139, 92, 246, 0.1);">
+                <div style="font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #A78BFA;">Get In Touch</div>
+                <p style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px; line-height: 1.6;">
+                    Have questions, feedback, or need support? We're here to help.
+                </p>
+                <a href="mailto:corporationsansvarg@gmail.com" style="display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; text-decoration: none; color: #A78BFA; font-weight: 600; font-size: 14px; box-shadow: 0 0 16px rgba(139, 92, 246, 0.1);">
+                    <span style="font-size: 20px;">✉️</span>
+                    <span>corporationsansvarg@gmail.com</span>
+                </a>
+            </div>
+
+            <!-- About Section -->
+            <div style="text-align: center; padding: 24px 0;">
+                <div style="font-size: 18px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.5));">
+                    Founded by SansVarg Corporation
+                </div>
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.5); margin-bottom: 16px;">
+                    Building tools for freedom and transformation
+                </div>
+                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">
+                    © 2025 SansVarg Corporation. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchPage('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('progress')">
+            <div class="nav-icon">📊</div>
+            <div class="nav-label">Progress</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('tools')">
+            <div class="nav-icon">🛠️</div>
+            <div class="nav-label">Tools</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('reasons')">
+            <div class="nav-icon">💭</div>
+            <div class="nav-label">Reasons</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('support')">
+            <div class="nav-icon">💛</div>
+            <div class="nav-label">Support</div>
+        </div>
+    </div>
+</div>
+
+<!-- MODALS -->
+
+<!-- Settings Modal -->
+<div class="modal" id="settingsModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-icon">⚙️</div>
+        <div class="modal-title">Settings</div>
+        
+        <div style="text-align: left; margin: 24px 0;">
+            <!-- Dark Mode -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 12px; margin-bottom: 12px;">
+                <div>
+                    <div style="font-weight: 700; margin-bottom: 4px;">🌙 Dark Mode</div>
+                    <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Toggle dark/light theme</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleDarkModeFromSettings()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Sound Effects -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 12px; margin-bottom: 12px;">
+                <div>
+                    <div style="font-weight: 700; margin-bottom: 4px;">🔊 Sound Effects</div>
+                    <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Enable celebration sounds</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Change Name -->
+            <div style="padding: 16px; background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 12px; margin-bottom: 12px;">
+                <div style="font-weight: 700; margin-bottom: 8px;">👤 Change Name</div>
+                <input type="text" class="input-field" id="changeNameInput" placeholder="Your name" style="margin-bottom: 8px;">
+                <button class="add-btn" onclick="changeName()" style="padding: 10px;">Update Name</button>
+            </div>
+
+            <!-- Reset All Data -->
+            <div style="padding: 16px; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px;">
+                <div style="font-weight: 700; margin-bottom: 4px; color: #EF4444;">⚠️ Reset All Data</div>
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6); margin-bottom: 12px;">This will erase everything permanently</div>
+                <button onclick="confirmResetAllData()" style="width: 100%; background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); border: none; border-radius: 10px; padding: 10px; color: white; font-size: 14px; font-weight: 600; cursor: pointer;">
+                    Reset All Data
+                </button>
+            </div>
+
+            <!-- App Info -->
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(139, 92, 246, 0.2); text-align: center;">
+                <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6); margin-bottom: 8px;">
+                    <strong style="color: #A78BFA;">Redeemed</strong> v1.0
+                </div>
+                <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+                    © 2025 SansVarg Corporation
+                </div>
+                <a href="mailto:corporationsansvarg@gmail.com" style="display: inline-block; margin-top: 8px; font-size: 12px; color: #A78BFA; text-decoration: none;">
+                    Contact Support
+                </a>
+            </div>
+        </div>
+
+        <button class="modal-btn" onclick="closeSettings()">Close</button>
+    </div>
+</div>
+
+<!-- Welcome Modal -->
+<div class="modal active" id="welcomeModal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-icon">✝️</div>
+        <div class="modal-title">Welcome to Redeemed</div>
+        <div class="modal-message">Let's start your journey to freedom. What should I call you?</div>
+        <input type="text" class="input-field" id="userNameInput" placeholder="Your first name" style="margin-bottom: 20px;" maxlength="20">
+        <button class="modal-btn" onclick="saveName()">Start My Journey</button>
+    </div>
+</div>
+
+<!-- Panic Modal -->
+<div class="modal" id="panicModal">
+    <div class="modal-content">
+        <div class="modal-icon">✨</div>
+        <div class="modal-title">You Are Stronger</div>
+        <div class="modal-message" id="panicMessage">Embrace this pause</div>
+        <button class="modal-btn" onclick="startBreathing()">Start Breathing Exercise</button>
+    </div>
+</div>
+
+<!-- Breathing Modal -->
+<div class="modal" id="breathingModal">
+    <div class="modal-content">
+        <div class="modal-icon">🧘</div>
+        <div class="modal-title">Breathe & Reflect</div>
+        <div class="breathing-circle breathe-in" id="breathCircle">
+            <span id="breathText">Breathe In</span>
+        </div>
+        <div class="reflection-text" id="reflectionText">Porn is a drug that rewires your brain</div>
+        <div class="breath-counter" id="breathCounter">Breath 1 of 10</div>
+        <button class="modal-btn" onclick="closeBreathing()">I Feel Better</button>
+    </div>
+</div>
+
+<!-- Scripture Blast Modal -->
+<div class="modal" id="scriptureBlastModal">
+    <div class="modal-content">
+        <div class="modal-icon">⚡</div>
+        <div class="modal-title">TRUTH BOMB</div>
+        <div style="background: rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 24px; margin: 20px 0; min-height: 120px; display: flex; align-items: center; justify-content: center;">
+            <div style="font-size: 17px; line-height: 1.6; font-weight: 600; text-align: center;" id="scriptureBlastText">
+                "Flee from sexual immorality."
+            </div>
+        </div>
+        <div style="font-size: 14px; font-weight: 700; color: #8B5CF6; margin-bottom: 20px;" id="scriptureBlastRef">1 Corinthians 6:18</div>
+        <button class="modal-btn" onclick="nextScripture()">⚡ NEXT TRUTH</button>
+        <button class="modal-btn" onclick="closeScriptureBlast()" style="background: rgba(255, 255, 255, 0.1); margin-top: 10px;">Done</button>
+    </div>
+</div>
+
+<!-- Reset Confirmation Modal -->
+<div class="modal" id="resetModal">
+    <div class="modal-content">
+        <div class="modal-icon">🔄</div>
+        <div class="modal-title">Reset Your Streak?</div>
+        <div class="modal-message">God's mercies are new every morning. Don't give up - get back up and keep fighting.</div>
+        <textarea class="input-field" id="resetReflection" placeholder="What led to this? (Optional reflection)" style="height: 80px; margin-bottom: 16px; resize: none;"></textarea>
+        <button class="modal-btn" onclick="executeReset()" style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">Yes, Reset Streak</button>
+        <button class="modal-btn" onclick="closeResetModal()" style="background: rgba(255, 255, 255, 0.1); margin-top: 10px;">Cancel</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+```
+
+</body>
+</html>
